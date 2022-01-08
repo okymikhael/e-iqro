@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RouterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages/dashboard');
 });
+
+Route::get('/{route}', [RouterController::class, 'index']);
+// Route::get('/{route}/{id}', [RouterController::class, 'show']);
+Route::get('/update-{route}/{id}', [RouterController::class, 'edit']);
+Route::get('/{route}/{action}', [RouterController::class, 'create']);
