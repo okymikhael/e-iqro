@@ -36,7 +36,7 @@ class FormSiswa extends Component
             'telp_ayah' => 'text',
             'nama_ibu' => 'text',
             'telp_ibu' => 'text',
-            'active' => ['Aktif' => 1, 'Tidak Aktif' => 0],
+            'active' => ['radio' => ['Aktif' => 1, 'Tidak Aktif' => 0]],
         ];
 
         return view('livewire.forms.scaffold', compact('fields'));

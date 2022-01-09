@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use App\Models\Siswa;
 use App\Models\Guru;
 use App\Models\Pelajaran;
@@ -41,6 +42,7 @@ class DummyGenerator extends Command
      */
     public function handle()
     {
+        User::factory()->count(100)->create();
         Siswa::factory()->count(100)->create();
         Guru::factory()->count(100)->create();
         Pelajaran::factory()->count(100)->create();

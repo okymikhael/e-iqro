@@ -18,7 +18,11 @@ Route::get('/', function () {
     return view('pages/dashboard');
 });
 
-Route::get('/{route}', [RouterController::class, 'index']);
-// Route::get('/{route}/{id}', [RouterController::class, 'show']);
-Route::get('/update-{route}/{id}', [RouterController::class, 'edit']);
-Route::get('/{route}/{action}', [RouterController::class, 'create']);
+Route::get('/{route}', [RouterController::class, 'index']); // menu
+
+Route::get('/{route}/detail/{id}', [RouterController::class, 'show']); // show siswa
+Route::get('/{route}/detail/{id}/{table}', [RouterController::class, 'create_from_show']); // create nilai siswa
+Route::get('/{route}/detail/{id_from_show}/update-{table}/{id}', [RouterController::class, 'edit_from_show']); // update nilai siswa
+
+Route::get('/update-{route}/{id}', [RouterController::class, 'edit']); // update record menu
+Route::get('/{route}/{action}', [RouterController::class, 'create']); // create record menu

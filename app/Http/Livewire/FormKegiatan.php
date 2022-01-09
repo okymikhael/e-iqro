@@ -10,6 +10,10 @@ use PDO;
 class FormKegiatan extends Component
 {
     public $kegiatan;
+    public $deskripsi;
+    public $tipe;
+    public $data;
+    public $group;
     public $event;
     public $model = Kegiatan::class;
 
@@ -17,6 +21,10 @@ class FormKegiatan extends Component
     {
         $fields = [
             'kegiatan' => 'text',
+            'deskripsi' => 'textarea',
+            'tipe' => ['select' => ['text' => 'text', 'textarea' => 'textarea', 'number' => 'number', 'time' => 'time', 'radio' => 'radio', 'select' => 'select']],
+            'data' => 'textarea',
+            'group' => 'text',
         ];
 
         return view('livewire.forms.scaffold', compact('fields'));
@@ -31,17 +39,29 @@ class FormKegiatan extends Component
             $this->event = $data;
 
             $this->kegiatan = $data->kegiatan;
+            $this->deskripsi = $data->deskripsi;
+            $this->tipe = $data->tipe;
+            $this->data = $data->data;
+            $this->group = $data->group;
         }
     }
 
     public function submit()
     {
         $this->validate([
-            'kegiatan'   => 'required',
+            'kegiatan'   => 'kegiatan',
+            'deskripsi'   => 'deskripsi',
+            'tipe'   => 'tipe',
+            'data'   => 'data',
+            'group'   => 'group',
         ]);
 
         $data = [
             'kegiatan'  => $this->kegiatan,
+            'deskripsi'  => $this->deskripsi,
+            'tipe'  => $this->tipe,
+            'data'  => $this->data,
+            'group'  => $this->group,
         ];
 
         if($this->event){
