@@ -19,6 +19,7 @@ class FormKegiatan extends Component
 
     public function render()
     {
+        $form_name = "Kegiatan";
         $fields = [
             'kegiatan' => 'text',
             'deskripsi' => 'textarea',
@@ -27,7 +28,7 @@ class FormKegiatan extends Component
             'group' => 'text',
         ];
 
-        return view('livewire.forms.scaffold', compact('fields'));
+        return view('livewire.forms.scaffold', compact('fields', 'form_name'));
     }
 
     public function mount(){

@@ -15,26 +15,35 @@ class FormAktifitasSiswa extends Component
     public $keterangan;
     public $tanggal;
     public $attachment;
+    public $field_kegiatan = [];
     public $event;
     public $model = AktifitasSiswa::class;
 
+    public function selectKegiatan()
+    {
+        $kegiatan = Kegiatan::find($this->kegiatan);
+        if($kegiatan) $this->field_kegiatan[$kegiatan->deskripsi] = $kegiatan->data ? $kegiatan->data : $kegiatan->tipe;
+    }
+
+    public function deleteKegiatan($id)
+    {
+        unset($this->field_kegiatan[$id]);
+    }
+
     public function render()
     {
-        $kegiatan = [];
+        $form_name = "Aktifitas";
         foreach(Kegiatan::all() as $kegiatans) $kegiatan[$kegiatans->deskripsi] = $kegiatans->id;
 
         $fields = [
-            'kegiatan' => ['select' => $kegiatan],
-            'hasil' => 'text', // sementara
-            'Tambah Kegiatan' => ['button' => ['green']], // sementara
-            'Hapus Kegiatan' => ['button' => ['red']], // sementara
             'keterangan' => 'textarea',
             'tanggal' => 'date',
             'attachment' => 'file',
-            'Tambah Dokumen' => ['button' => ['green']], // sementara
+            'Tambah Dokumen' => ['button' => ['green'], 'id' => 'tambah_dokumen'], // sementara
+            'kegiatan' => ['select' => $kegiatan, 'id' => 'select_kegiatan'],
         ];
 
-        return view('livewire.forms.scaffold', compact('fields'));
+        return view('livewire.forms.scaffold', compact('fields', 'form_name'));
     }
 
     public function mount(){
@@ -55,6 +64,7 @@ class FormAktifitasSiswa extends Component
 
     public function submit()
     {
+        dd(request()->all());
         $this->validate([
             'kegiatan'   => 'required',
             'keterangan'   => 'required',

@@ -8,6 +8,4 @@
             </svg>
         </button>
     </a>
-
-    @include('datatables::delete', ['value' => $id])
 </div>

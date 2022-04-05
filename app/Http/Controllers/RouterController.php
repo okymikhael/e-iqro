@@ -8,7 +8,7 @@ use App\Models\Siswa;
 class RouterController extends Controller
 {
     public function index($route){
-        $list = ['siswa', 'guru', 'pelajaran', 'kegiatan', 'user', 'report'];
+        $list = ['siswa', 'guru', 'pelajaran', 'kegiatan', 'user', 'report', 'login'];
         if(!in_array($route, $list)) abort(404);
 
         return view('pages/'.$route); 

@@ -23,7 +23,7 @@ class LivewireGuru extends LivewireDatatable
             Column::name('nama_guru')->label('Nama')->searchable(),
 
             Column::callback(['id'], function ($id) {
-                return view('livewire.actions.actions-edit-delete', ['id' => $id]);
+                return view('livewire.actions.actions-edit', ['id' => $id, 'route' => 'guru']);
             })->label('Action')->unsortable()
         ];
     }

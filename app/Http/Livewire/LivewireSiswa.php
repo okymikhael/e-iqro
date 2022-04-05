@@ -25,7 +25,7 @@ class LivewireSiswa extends LivewireDatatable
             })->label('Jenis Kelamin')->unsortable(),
 
             Column::callback(['id'], function ($id) {
-                return view('livewire.actions.actions-show-edit-delete', ['id' => $id]);
+                return view('livewire.actions.actions-show-edit', ['id' => $id, 'route' => 'siswa']);
             })->label('Action')->unsortable()
         ];
     }

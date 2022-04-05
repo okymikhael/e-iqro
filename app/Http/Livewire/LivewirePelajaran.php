@@ -22,7 +22,7 @@ class LivewirePelajaran extends LivewireDatatable
             Column::name('pelajaran')->label('Pelajaran')->searchable(),
 
             Column::callback(['id'], function ($id) {
-                return view('livewire.actions.actions-edit-delete', ['id' => $id]);
+                return view('livewire.actions.actions-edit', ['id' => $id, 'route' => 'pelajaran']);
             })->label('Action')->unsortable()
         ];
     }

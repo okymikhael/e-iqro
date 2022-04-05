@@ -24,7 +24,7 @@ class LivewireKegiatan extends LivewireDatatable
             Column::name('group')->label('Group')->searchable(),
 
             Column::callback(['id'], function ($id) {
-                return view('livewire.actions.actions-edit-delete', ['id' => $id]);
+                return view('livewire.actions.actions-edit', ['id' => $id, 'route' => 'kegiatan']);
             })->label('Action')->unsortable()
         ];
     }

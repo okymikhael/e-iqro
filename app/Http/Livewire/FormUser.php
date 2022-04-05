@@ -17,14 +17,15 @@ class FormUser extends Component
 
     public function render()
     {
+        $form_name = "User";
         $fields = [
             'name' => 'text',
             'email' => 'email',
             'password' => 'password',
-            'role' => ['select' => ['Guru' => 'guru', 'Siswa' => 'siswa']],
+            // 'role' => ['select' => ['Guru' => 'guru', 'Siswa' => 'siswa']],
         ];
 
-        return view('livewire.forms.scaffold', compact('fields'));
+        return view('livewire.forms.scaffold', compact('fields', 'form_name'));
     }
 
     public function mount(){
@@ -38,7 +39,6 @@ class FormUser extends Component
             $this->name = $data->name;
             $this->email = $data->email;
             $this->password = $data->password;
-            $this->role = $data->role;
         }
     }
 
@@ -48,7 +48,6 @@ class FormUser extends Component
             'name'   => 'required',
             'email'   => 'required',
             'password'   => 'required',
-            'role'   => 'required',
         ]);
 
         $data = [

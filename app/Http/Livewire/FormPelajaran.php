@@ -9,17 +9,18 @@ use PDO;
 
 class FormPelajaran extends Component
 {
-    public $Pelajaran;
+    public $pelajaran;
     public $event;
     public $model = Pelajaran::class;
 
     public function render()
     {
+        $form_name = "Pelajaran";
         $fields = [
             'pelajaran' => 'text',
         ];
 
-        return view('livewire.forms.scaffold', compact('fields'));
+        return view('livewire.forms.scaffold', compact('fields', 'form_name'));
     }
 
     public function mount(){
@@ -61,6 +62,6 @@ class FormPelajaran extends Component
         ]);
 
         //redirect
-        return redirect('/Pelajaran');
+        return redirect('/pelajaran');
     }
 }

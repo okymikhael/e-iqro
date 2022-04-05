@@ -17,13 +17,14 @@ class FormGuru extends Component
 
     public function render()
     {
+        $form_name = "Guru";
         $fields = [
             'nip' => 'text',
             'nama_guru' => 'text',
             'alamat' => 'textarea',
         ];
 
-        return view('livewire.forms.scaffold', compact('fields'));
+        return view('livewire.forms.scaffold', compact('fields', 'form_name'));
     }
 
     public function mount(){

@@ -19,6 +19,7 @@ class FormNilaiSiswa extends Component
 
     public function render()
     {
+        $form_name = "Nilai";
         $pelajaran = [];
         foreach(Pelajaran::all() as $pelajarans) $pelajaran[$pelajarans->pelajaran] = $pelajarans->id;
 
@@ -28,7 +29,7 @@ class FormNilaiSiswa extends Component
             'nilai' => 'number',
         ];
 
-        return view('livewire.forms.scaffold', compact('fields'));
+        return view('livewire.forms.scaffold', compact('fields', 'form_name'));
     }
 
     public function mount(){

@@ -24,7 +24,7 @@ class LivewireUser extends LivewireDatatable
             Column::name('role')->label('Role')->searchable(),
 
             Column::callback(['id'], function ($id) {
-                return view('livewire.actions.actions-edit-delete', ['id' => $id]);
+                return view('livewire.actions.actions-edit', ['id' => $id, 'route' => 'user']);
             })->label('Action')->unsortable()
         ];
     }

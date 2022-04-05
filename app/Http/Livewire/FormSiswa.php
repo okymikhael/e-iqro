@@ -25,6 +25,7 @@ class FormSiswa extends Component
 
     public function render()
     {
+        $form_name = "Siswa";
         $fields = [
             'nama_lengkap' => 'text',
             'nama_panggilan' => 'text',
@@ -39,7 +40,7 @@ class FormSiswa extends Component
             'active' => ['radio' => ['Aktif' => 1, 'Tidak Aktif' => 0]],
         ];
 
-        return view('livewire.forms.scaffold', compact('fields'));
+        return view('livewire.forms.scaffold', compact('fields', 'form_name'));
     }
 
     public function mount(){
