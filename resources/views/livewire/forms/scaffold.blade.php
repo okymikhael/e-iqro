@@ -75,6 +75,7 @@
 
             <!-- Border Custom -->
 
+            @if($field_kegiatan ?? '')
             @foreach($field_kegiatan as $key => $field)
             @if(is_array($field) && array_key_first($field) == 'radio')
             @foreach($field[array_key_first($field)] as $k => $v)
@@ -93,11 +94,10 @@
                 Hapus
             </button>
 
-
             @elseif(is_array($field) && array_key_first($field) == 'select')
             <label class="block text-sm mb-4">
                 <span class="text-gray-700 dark:text-gray-400">{{implode(" ", array_map('ucfirst', explode("_", $key)))}}</span>
-                <select wire:model="{{$key}}" name="{{$key}}" @if($form_name == 'Aktifitas') wire:change="selectKegiatan()" @endif class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" @if(array_key_exists('id', $field)) id="{{$field['id']}}" @endif>
+                <select wire:model="data_kegiatan.{{$key}}" name="data_kegiatan.{{$key}}" @if($form_name == 'Aktifitas') wire:change="selectKegiatan()" @endif class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" @if(array_key_exists('id', $field)) id="{{$field['id']}}" @endif>
                     <option value="" selected>Pilih {{implode(" ", array_map('ucfirst', explode("_", $key)))}}</option>
                     @foreach($field[array_key_first($field)] as $k => $v)
                     <option value="{{$v}}">{{$k}}</option>
@@ -117,7 +117,7 @@
             @elseif($field == 'textarea')
             <label class="block text-sm mb-4">
                 <span class="text-gray-700 dark:text-gray-400">{{implode(" ", array_map('ucfirst', explode("_", $key)))}}</span>
-                <textarea class="@error($key) border-red-700 @enderror block w-full h-24 mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" wire:model="{{$key}}" name="{{$key}}"></textarea>
+                <textarea class="@error($key) border-red-700 @enderror block w-full h-24 mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" wire:model="data_kegiatan.{{$key}}" name="data_kegiatan.{{$key}}"></textarea>
                 <button type="button" wire:click="deleteKegiatan('{{$key}}')" class="flex items-right justify-between w-34 px-2 py-1 mt-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
                     Hapus
                 </button>
@@ -132,7 +132,7 @@
             @else
             <label class="block text-sm mb-4">
                 <span class="text-gray-700 dark:text-gray-400">{{implode(" ", array_map('ucfirst', explode("_", $key)))}}</span>
-                <input class="@error('{{$key}}') border-red-700 @enderror block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" wire:model="{{$key}}" type="{{$field}}" name="{{$key}}" />
+                <input class="@error('{{$key}}') border-red-700 @enderror block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" wire:model="data_kegiatan.{{$key}}" type="{{$field}}" name="data_kegiatan.{{$key}}" />
                 <button type="button" wire:click="deleteKegiatan('{{$key}}')" class="flex items-right justify-between w-34 px-2 py-1 mt-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
                     Hapus
                 </button>
@@ -144,6 +144,7 @@
             @enderror
             @endif
             @endforeach
+            @endif
 
 
             <label>

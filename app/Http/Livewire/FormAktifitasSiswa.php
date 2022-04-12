@@ -16,6 +16,7 @@ class FormAktifitasSiswa extends Component
     public $tanggal;
     public $attachment;
     public $field_kegiatan = [];
+    public $data_kegiatan;
     public $event;
     public $model = AktifitasSiswa::class;
 
