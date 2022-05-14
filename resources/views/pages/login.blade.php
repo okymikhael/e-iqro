@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Windmill Dashboard</title>
+    <title>Login - Eiqro Dashboard</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -36,6 +36,8 @@
             />
           </div>
           <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+            <form action="/login" method="POST" class="form-horizontal w-full">
+              @csrf
             <div class="w-full">
               <h1
                 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200"
@@ -46,8 +48,11 @@
                 <span class="text-gray-700 dark:text-gray-400">Email</span>
                 <input
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                  placeholder="Jane Doe"
+                  name="email"
                 />
+                @error('email')
+                email is required
+                @enderror
               </label>
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Password</span>
@@ -55,18 +60,20 @@
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="***************"
                   type="password"
+                  name="password"
                 />
+                @error('password')
+                password is required
+                @enderror
               </label>
 
               <!-- You should use a button here, as the anchor is only used for the example  -->
-              <a
+              <button type="submit"
                 class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                href="../index.html"
               >
                 Log in
-              </a>
-
-
+              </button>
+            </form>
             </div>
           </div>
         </div>

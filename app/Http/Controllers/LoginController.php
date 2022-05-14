@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Siswa;
  
 class LoginController extends Controller
@@ -14,6 +15,21 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function web_authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials))
+            return redirect('/');
+ 
+        return back()->withErrors([
+            'unmatch' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([

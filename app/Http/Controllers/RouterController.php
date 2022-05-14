@@ -8,6 +8,23 @@ use App\Models\MeetOnline;
 
 class RouterController extends Controller
 {
+    public function login(){
+        if(request()->user())
+            return redirect('/');
+
+        return view('pages/login');
+    }
+
+    public function logout(){
+        if(request()->user()->currentAccessToken())
+            request()->user()->currentAccessToken()->delete();
+        
+        if(request()->session())
+            request()->session()->flush();
+
+        return redirect('/');
+    }
+
     public function dashboard(){
         $meet = MeetOnline::find(1);
 
