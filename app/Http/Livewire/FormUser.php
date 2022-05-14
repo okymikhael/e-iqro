@@ -2,16 +2,19 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use App\Models\User;
 use PDO;
 
 class FormUser extends Component
 {
+    public $nip;
     public $name;
+    public $alamat;
     public $email;
     public $password;
-    public $role;
+    public $old_password;
     public $event;
     public $model = User::class;
 
@@ -19,10 +22,11 @@ class FormUser extends Component
     {
         $form_name = "User";
         $fields = [
+            'nip' => 'text',
             'name' => 'text',
             'email' => 'email',
+            'alamat' => 'textarea',
             'password' => 'password',
-            // 'role' => ['select' => ['Guru' => 'guru', 'Siswa' => 'siswa']],
         ];
 
         return view('livewire.forms.scaffold', compact('fields', 'form_name'));
@@ -36,27 +40,33 @@ class FormUser extends Component
         if($data){
             $this->event = $data;
 
+            $this->nip = $data->nip;
             $this->name = $data->name;
+            $this->alamat = $data->alamat;
             $this->email = $data->email;
-            $this->password = $data->password;
+            $this->old_password = $data->password;
         }
     }
 
     public function submit()
     {
         $this->validate([
+            'nip'   => 'required',
+            'alamat'   => 'required',
             'name'   => 'required',
             'email'   => 'required',
-            'password'   => 'required',
         ]);
 
-        $data = [
-            'name'  => $this->name,
-            'email'  => $this->email,
-            'password'  => $this->password,
-            'role'  => $this->role,
-        ];
+        if($this->password && $this->old_password != $this->password) 
+            $this->password = Hash::make($this->password);
 
+        $data = [
+            'nip'  => $this->nip,
+            'name'  => $this->name,
+            'alamat'  => $this->alamat,
+            'email'  => $this->email,
+            'password'  => $this->password ? $this->password : $this->old_password,
+        ];
 
         if($this->event){
             $this->model::find($this->event->id)->update($data);

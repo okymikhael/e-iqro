@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use App\Models\Siswa;
 use App\Models\User;
@@ -12,6 +13,7 @@ class FormSiswa extends Component
     public $nama_lengkap;
     public $nama_panggilan;
     public $tempat_lahir;
+    public $kelas;
     public $tanggal_lahir;
     public $jenis_kelamin;
     public $alamat;
@@ -20,6 +22,8 @@ class FormSiswa extends Component
     public $nama_ibu;
     public $telp_ibu;
     public $active;
+    public $password;
+    public $old_password;
     public $event;
     public $model = Siswa::class;
 
@@ -30,6 +34,7 @@ class FormSiswa extends Component
             'nama_lengkap' => 'text',
             'nama_panggilan' => 'text',
             'tempat_lahir' => 'text',
+            'kelas' => 'text',
             'tanggal_lahir' => 'text',
             'jenis_kelamin' => 'text',
             'alamat' => 'textarea',
@@ -37,6 +42,7 @@ class FormSiswa extends Component
             'telp_ayah' => 'text',
             'nama_ibu' => 'text',
             'telp_ibu' => 'text',
+            'password' => 'password',
             'active' => ['radio' => ['Aktif' => 1, 'Tidak Aktif' => 0]],
         ];
 
@@ -54,6 +60,7 @@ class FormSiswa extends Component
             $this->nama_lengkap = $data->nama_lengkap;
             $this->nama_panggilan = $data->nama_panggilan;
             $this->tempat_lahir = $data->tempat_lahir;
+            $this->kelas = $data->kelas;
             $this->tanggal_lahir = $data->tanggal_lahir;
             $this->jenis_kelamin = $data->jenis_kelamin;
             $this->alamat = $data->alamat;
@@ -62,6 +69,7 @@ class FormSiswa extends Component
             $this->nama_ibu = $data->nama_ibu;
             $this->telp_ibu = $data->telp_ibu;
             $this->active = $data->active;
+            $this->old_password = $data->password;
         }
     }
 
@@ -71,6 +79,7 @@ class FormSiswa extends Component
             'nama_lengkap'   => 'required',
             'nama_panggilan'   => 'required',
             'tempat_lahir'   => 'required',
+            'kelas'   => 'required',
             'tanggal_lahir'   => 'required',
             'jenis_kelamin'   => 'required',
             'alamat'   => 'required',
@@ -80,10 +89,15 @@ class FormSiswa extends Component
             'telp_ibu'   => 'required',
         ]);
 
+        if($this->password && $this->old_password != $this->password) 
+            $this->password = Hash::make($this->password);
+
+
         $data = [
             'nama_lengkap'  => $this->nama_lengkap,
             'nama_panggilan'  => $this->nama_panggilan,
             'tempat_lahir'  => $this->tempat_lahir,
+            'kelas'  => $this->kelas,
             'tanggal_lahir'  => $this->tanggal_lahir,
             'jenis_kelamin'  => $this->jenis_kelamin,
             'alamat'  => $this->alamat,
@@ -92,6 +106,7 @@ class FormSiswa extends Component
             'nama_ibu'  => $this->nama_ibu,
             'telp_ibu'  => $this->telp_ibu,
             'active'  => $this->active,
+            'password'  => $this->password ? $this->password : $this->old_password,
         ];
 
         if($this->event){

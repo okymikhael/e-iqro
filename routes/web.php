@@ -14,9 +14,13 @@ use App\Http\Controllers\RouterController;
 |
 */
 
-Route::get('/', function () {
-    return view('pages/dashboard');
-});
+Route::get('/login', function () {
+    return response()->json(['error' => true, 'data' => 'Please Login'], 401);
+})->name('login');
+
+Route::get('/', [RouterController::class, 'dashboard']); // dashboard
+Route::post('/meet_online', [RouterController::class, 'meet_online']); // add meet online link
+
 
 Route::get('/{route}', [RouterController::class, 'index']); // menu
 

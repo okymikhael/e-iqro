@@ -9,14 +9,14 @@ use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\NumberColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
-class LivewireAktifitasSiswa extends LivewireDatatable
+class LivewireReportAktifitasSiswa extends LivewireDatatable
 {
     // public $status;
     public $model = AktifitasSiswa::class;
 
     public function builder()
     {
-        return AktifitasSiswa::query()->where('id_siswa', \Request::segment(3))->orderBy('created_at', 'desc');
+        return AktifitasSiswa::query()->orderBy('created_at', 'desc');
     }
 
     public function columns()

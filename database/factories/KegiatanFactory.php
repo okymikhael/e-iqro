@@ -21,12 +21,14 @@ class KegiatanFactory extends Factory
      */
     public function definition()
     {
+        $radio = '{"radio" : {"False" : 0, "True" : 1}}';
+        $select = '{"select" : {"False" : 0, "True" : 1}}';
         $tipe = $this->faker->randomElement(['text', 'textarea', 'number', 'time', 'radio', 'select']);
         return [
             'kegiatan' => $this->faker->randomElement(['Menonton', 'Senam', 'Berenang']),
             'deskripsi' => $this->faker->randomElement(['Menonton Film', 'Senam/Menari', 'Bermain berkelompok']),
             'tipe' => $tipe,
-            'data' => $tipe == 'radio' || $tipe == 'select' ? $this->faker->randomElement(["'radio' => ['False' => 0, 'True' => 1]", "'select' => ['False' => 0, 'True' => 1]"]) : null,
+            'data' => ($tipe == 'radio' ? $radio : ($tipe == 'select' ? $select : null)),
             'group' => $this->faker->randomElement(['Makanan dan Snack', 'Kegiatanku', 'Kecelakaan']),
         ];
     }

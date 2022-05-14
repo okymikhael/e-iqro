@@ -13,15 +13,7 @@
         <h2 class="text-xl font-bold text-gray-700 dark:text-gray-200 text-center">
             Kegiatan
         </h2>
-        <livewire:livewire-aktifitas-siswa exportable/>
-    </div>
-
-    <!-- Cards -->
-    <div class="grid gap-6 mb-8 xs:grid-cols-2 xl:grid-cols-1 bg-white dark:bg-gray-800 rounded-lg p-4 bg-opacity-95">
-        <h2 class="text-xl font-bold text-gray-700 dark:text-gray-200 text-center">
-            Pelajaran
-        </h2>
-        <livewire:livewire-nilai-siswa exportable/>
+        <livewire:livewire-report-aktifitas-siswa/>
     </div>
 </div>
 @endsection

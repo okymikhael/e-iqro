@@ -4,9 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Siswa;
+use App\Models\MeetOnline;
 
 class RouterController extends Controller
 {
+    public function dashboard(){
+        $meet = MeetOnline::find(1);
+
+        return view('pages/dashboard', compact('meet'));
+    }
+
+    public function meet_online(){
+        $meet = MeetOnline::find(1);
+        if(!$meet) $meet = new MeetOnline();
+
+        $meet->link = request('link');
+        $meet->tanggal = request('tanggal');
+        $meet->provider = request('provider');
+        $meet->save();
+
+        return redirect('/');
+    }
+
     public function index($route){
         $list = ['siswa', 'guru', 'pelajaran', 'kegiatan', 'user', 'report', 'login'];
         if(!in_array($route, $list)) abort(404);

@@ -8,20 +8,22 @@ use App\Models\Guru;
 use App\Models\Siswa;
 use App\Models\Kegiatan;
 use App\Models\Pelajaran;
+use App\Models\MeetOnline;
+use App\Models\AktifitasSiswa;
 
 class APIController extends Controller
 {
     public function index(){
-        $host = request()->getHttpHost().'/v1';
+        $host = request()->getSchemeAndHttpHost().'/api/v1';
         $data = [
             'user' => "$host/user",
-            'guru' => "$host/guru",
             'siswa' => "$host/siswa",
             'kegiatan' => "$host/kegiatan",
-            'pelajaran' => "$host/pelajaran",
+            'motorik' => "$host/motorik",
+            'spider_chart' => "$host/spider_chart",
         ];
 
-        return response()->json(['success' => true, 'data' => $data]);
+        return response()->json(['success' => true, 'data' => $data])->setEncodingOptions(JSON_UNESCAPED_SLASHES);
     }
 
     public function user(){
@@ -52,5 +54,27 @@ class APIController extends Controller
         $data = Pelajaran::paginate(10);
 
         return response()->json(['success' => true, 'data' => $data]);
+    }
+
+    public function motorik(){
+        $user = request()->user();
+        $data = AktifitasSiswa::where('id_siswa', $user->id)->paginate(10);
+
+        return response()->json(['success' => true, 'data' => $data]);
+    }
+
+    public function meet(){
+        $data = MeetOnline::find(1);
+
+        return response()->json(['success' => true, 'data' => $data]);
+    }
+
+    public function spider_chart(){
+        $user = request()->user();
+        $m_kasar = AktifitasSiswa::where(['id_siswa' => $user->id, 'group' => 'MOTORIK KASAR'])->distinct()->get();
+        // $m_kasar = AktifitasSiswa::where(['id_siswa' => $user->id, 'group' => 'MOTORIK KASAR'])->orderBy('created_at', 'desc')->groupBy('keterangan')->get();
+        dd($m_kasar);
+
+        return response()->json(['success' => true, 'data' => $m_kasar]);
     }
 }

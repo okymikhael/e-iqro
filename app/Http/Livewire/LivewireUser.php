@@ -19,9 +19,9 @@ class LivewireUser extends LivewireDatatable
         // dd(request()->getRequestUri());
         return [
             NumberColumn::name('id')->label('ID')->sortBy('id')->defaultSort('asc'),
+            Column::name('nip')->label('NIP')->searchable(),
             Column::name('name')->label('Nama')->searchable(),
             Column::name('email')->label('Email')->searchable(),
-            Column::name('role')->label('Role')->searchable(),
 
             Column::callback(['id'], function ($id) {
                 return view('livewire.actions.actions-edit', ['id' => $id, 'route' => 'user']);

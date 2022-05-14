@@ -17,35 +17,11 @@
         </a>
     </div>
 
-    <div class="flex items-center justify-between">
-        <div class="w-1/2">
-            <canvas class="p-10" width="10px" height="10px" id="chartAkademik"></canvas>
-            <div class="py-3 px-5 text-center">Akademik</div>
-        </div>
+    <div class="flex items-center justify-center">
         <div class="w-1/2">
             <canvas class="p-10" width="10px" height="10px" id="chartMotorik"></canvas>
             <div class="py-3 px-5 text-center">Motorik</div>
         </div>
-    </div>
-</div>
-
-<div class="px-4 py-3 m-8 bg-white rounded-lg shadow-md dark:bg-gray-800 bg-opacity-90">
-    <div class="flex items-center justify-between mx-6">
-        <h2 class="my-6 text-xl font-semibold text-gray-700 dark:text-gray-200">
-            Nilai Akademik: {{$siswa->nama_lengkap}}
-        </h2>
-
-        <a href="/siswa/detail/{{$siswa->id}}/nilai">
-            <button
-                class="flex items-right justify-between w-20 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                New
-                <span class="ml-2" aria-hidden="true">+</span>
-            </button>
-        </a>
-    </div>
-
-    <div class="grid gap-6 mb-8 xs:grid-cols-2 xl:grid-cols-1 bg-white dark:bg-gray-800 rounded-lg p-4 bg-opacity-95">
-        <livewire:livewire-nilai-siswa />
     </div>
 </div>
 

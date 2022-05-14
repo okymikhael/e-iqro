@@ -50,11 +50,11 @@ class FormKegiatan extends Component
     public function submit()
     {
         $this->validate([
-            'kegiatan'   => 'kegiatan',
-            'deskripsi'   => 'deskripsi',
-            'tipe'   => 'tipe',
-            'data'   => 'data',
-            'group'   => 'group',
+            'kegiatan'   => 'required',
+            'deskripsi'   => 'required',
+            'tipe'   => 'required',
+            'data'   => 'required',
+            'group'   => 'required',
         ]);
 
         $data = [
