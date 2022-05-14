@@ -46,6 +46,7 @@ class FormAktifitasSiswa extends Component
     public function deleteKegiatan($id)
     {
         unset($this->field_kegiatan[$id]);
+        unset($this->data_kegiatan[$id]);
     }
 
     public function addAttachment(){

@@ -11,18 +11,17 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class LivewireAktifitasSiswa extends LivewireDatatable
 {
-    // public $status;
+    public $user_id;
     public $model = AktifitasSiswa::class;
 
     public function builder()
     {
-        return AktifitasSiswa::query()->where('id_siswa', \Request::segment(3))->orderBy('created_at', 'desc');
+        return AktifitasSiswa::query()->where('id_siswa', $this->user_id)->orderBy('created_at', 'desc');
     }
 
     public function columns()
     {
         return [
-            NumberColumn::name('id')->label('ID')->sortBy('id')->defaultSort('asc'),
             Column::name('keterangan')->label('keterangan')->searchable(),
             Column::name('tanggal')->label('Tanggal')->searchable(),
 

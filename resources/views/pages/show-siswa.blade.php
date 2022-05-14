@@ -8,19 +8,23 @@
             {{$siswa->nama_lengkap}}
         </h2>
 
-        <a href="/report/siswa/{{$siswa->id}}">
+        <!-- <a href="/report/siswa/{{$siswa->id}}">
             <button
                 class="flex items-right justify-between w-22 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 Report
                 <span class="ml-2" aria-hidden="true">+</span>
             </button>
-        </a>
+        </a> -->
     </div>
 
     <div class="flex items-center justify-center">
         <div class="w-1/2">
-            <canvas class="p-10" width="10px" height="10px" id="chartMotorik"></canvas>
-            <div class="py-3 px-5 text-center">Motorik</div>
+            <canvas class="p-10" width="10px" height="10px" id="chartKasar"></canvas>
+            <div class="py-3 px-5 text-center">Motorik Kasar</div>
+        </div>
+        <div class="w-1/2">
+            <canvas class="p-10" width="10px" height="10px" id="chartHalus"></canvas>
+            <div class="py-3 px-5 text-center">Motorik Halus</div>
         </div>
     </div>
 </div>
@@ -41,7 +45,7 @@
     </div>
 
     <div class="grid gap-6 mb-8 xs:grid-cols-2 xl:grid-cols-1 bg-white dark:bg-gray-800 rounded-lg p-4 bg-opacity-95">
-        <livewire:livewire-aktifitas-siswa />
+        <livewire:livewire-aktifitas-siswa :user_id="$siswa->id" />
     </div>
 </div>
 
@@ -50,19 +54,11 @@
 
 <!-- Chart radar -->
 <script>
-    const dataRadar = {
-        labels: [
-            "Eating",
-            "Drinking",
-            "Sleeping",
-            "Designing",
-            "Coding",
-            "Cycling",
-            "Running",
-        ],
+    const dataRadarKasar = {
+        labels: ["{!! implode('","', $spider['spider_kasar']) !!}"],
         datasets: [{
-                label: "Rata-rata Sebelumnya",
-                data: [88, 90, 90, 95, 80, 85, 87],
+                label: "Data Sebelumnya",
+                data: [{{implode(',', $spider['spider_before']['motorik_kasar'])}}],
                 fill: true,
                 backgroundColor: "rgba(133, 105, 241, 0.2)",
                 borderColor: "rgb(133, 105, 241)",
@@ -72,8 +68,35 @@
                 pointHoverBorderColor: "rgb(133, 105, 241)",
             },
             {
-                label: "Minggu Ini",
-                data: [90, 92, 95, 95, 83, 90, 85],
+                label: "Data Terbaru",
+                data: [{{implode(',', $spider['spider_latest']['motorik_kasar'])}}],
+                fill: true,
+                backgroundColor: "rgba(54, 162, 235, 0.2)",
+                borderColor: "rgb(54, 162, 235)",
+                pointBackgroundColor: "rgb(54, 162, 235)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgb(54, 162, 235)",
+            },
+        ],
+    };
+    
+    const dataRadarHalus = {
+        labels: ["{!! implode('","', $spider['spider_halus']) !!}"],
+        datasets: [{
+                label: "Data Sebelumnya",
+                data: [{{implode(',', $spider['spider_before']['motorik_halus'])}}],
+                fill: true,
+                backgroundColor: "rgba(133, 105, 241, 0.2)",
+                borderColor: "rgb(133, 105, 241)",
+                pointBackgroundColor: "rgb(133, 105, 241)",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "rgb(133, 105, 241)",
+            },
+            {
+                label: "Data Terbaru",
+                data: [{{implode(',', $spider['spider_latest']['motorik_halus'])}}],
                 fill: true,
                 backgroundColor: "rgba(54, 162, 235, 0.2)",
                 borderColor: "rgb(54, 162, 235)",
@@ -85,21 +108,41 @@
         ],
     };
 
-    const configRadarChart = {
+
+    const configRadarHalus = {
         type: "radar",
-        data: dataRadar,
-        options: {},
+        data: dataRadarHalus,
+        options: {
+            scale: {
+                min: 0,
+                max: 5,
+                stepSize: 1,
+            },
+        },
+    };
+
+    const configRadarKasar = {
+        type: "radar",
+        data: dataRadarKasar,
+        options: {
+            scale: {
+                min: 0,
+                max: 5,
+                stepSize: 1,
+            },
+        },
     };
 
     var chartBar = new Chart(
-        document.getElementById("chartAkademik"),
-        configRadarChart
+        document.getElementById("chartHalus"),
+        configRadarHalus
     );
 
     var chartBar2 = new Chart(
-        document.getElementById("chartMotorik"),
-        configRadarChart
+        document.getElementById("chartKasar"),
+        configRadarKasar
     );
+
 </script>
 
 @endsection

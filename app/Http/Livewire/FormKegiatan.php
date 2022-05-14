@@ -59,7 +59,7 @@ class FormKegiatan extends Component
 
         $data = [
             'kegiatan'  => $this->kegiatan,
-            'deskripsi'  => $this->deskripsi,
+            'deskripsi'  => str_replace('.', '', $this->deskripsi),
             'tipe'  => $this->tipe,
             'data'  => $this->data,
             'group'  => $this->group,

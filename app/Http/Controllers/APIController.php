@@ -83,10 +83,57 @@ class APIController extends Controller
 
     public function spider_chart(){
         $user = request()->user();
-        $m_kasar = AktifitasSiswa::where(['id_siswa' => $user->id, 'group' => 'MOTORIK KASAR'])->distinct()->get();
-        // $m_kasar = AktifitasSiswa::where(['id_siswa' => $user->id, 'group' => 'MOTORIK KASAR'])->orderBy('created_at', 'desc')->groupBy('keterangan')->get();
-        dd($m_kasar);
+        $data = AktifitasSiswa::where(['id_siswa' => $user->id])->limit(2)->orderBy('tanggal', 'DESC')->get();
+        $latest = json_decode($data[0]['kegiatan'], true)['data_kegiatan'];
+        $before = json_decode($data[1]['kegiatan'], true)['data_kegiatan'];
+        
+        // matching each array
+        $temp_1 = [];
+        $most_data = count($latest) > count($before) ? 'latest' : 'before';
+        $less_data = $most_data == 'before' ? 'latest' : 'before';
+        foreach($$most_data as $key => $val){
+            $temp_1[$key] = array_key_exists($key, $$less_data) ? $$less_data[$key] : 0;
+        }
+        $diff_for_less=array_diff_key($$less_data,$$most_data);
+        foreach($diff_for_less as $key => $val){
+            $temp_1[$key] = array_key_exists($key, $$less_data) ? $$less_data[$key] : 0;
+        }
 
-        return response()->json(['success' => true, 'data' => $m_kasar]);
+        $temp_2 = [];
+        $most_data_2 = $most_data == 'before' ? 'latest' : 'before';
+        $less_data_2 = $most_data_2 == 'before' ? 'latest' : 'before';
+        foreach($temp_1 as $key => $val){
+            $temp_2[$key] = array_key_exists($key, $$less_data_2) ? $$less_data_2[$key] : 0;
+        }
+        $$less_data = $temp_1;
+        $$most_data = $temp_2;
+        
+        // Find motorik kasar dan halus
+        $spider_latest = [];
+        $spider_before = [];
+        foreach($latest as $k => $v){
+            $find = Kegiatan::where(['deskripsi' => $k])->first();
+            if($find['group'] == 'MOTORIK KASAR'){
+                $spider_latest['motorik_kasar'][$find['kegiatan']] = ['value' => $v, 'description' => $k];
+            }else if($find['group'] == 'MOTORIK HALUS'){
+                $spider_latest['motorik_halus'][$find['kegiatan']] = ['value' => $v, 'description' => $k];
+            }
+        }
+        
+        foreach($before as $k => $v){
+            $find = Kegiatan::where(['deskripsi' => $k])->first();
+            if($find['group'] == 'MOTORIK KASAR'){
+                $spider_before['motorik_kasar'][$find['kegiatan']] = ['value' => $v, 'description' => $k];
+            }else if($find['group'] == 'MOTORIK HALUS'){
+                $spider_before['motorik_halus'][$find['kegiatan']] = ['value' => $v, 'description' => $k];
+            }
+        }
+
+        $spider = [
+            'spider_latest' => $spider_latest,
+            'spider_before' => $spider_before,
+        ];
+
+        return response()->json(['success' => true, 'data' => $spider]);
     }
 }
