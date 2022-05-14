@@ -16,6 +16,7 @@ class APIController extends Controller
     public function index(){
         $host = request()->getSchemeAndHttpHost().'/api/v1';
         $data = [
+            'meet' => "$host/meet",
             'user' => "$host/user",
             'siswa' => "$host/siswa",
             'kegiatan' => "$host/kegiatan",
@@ -39,7 +40,13 @@ class APIController extends Controller
     }
 
     public function siswa(){
-        $data = Siswa::paginate(10);
+        $data = Siswa::orderBy('created_at', 'desc');
+        $req = request()->all();
+        foreach($req as $key => $value)
+            $data = $data->where($key, $value);
+
+        $data = $data->paginate(10);
+
 
         return response()->json(['success' => true, 'data' => $data]);
     }
@@ -58,7 +65,12 @@ class APIController extends Controller
 
     public function motorik(){
         $user = request()->user();
-        $data = AktifitasSiswa::where('id_siswa', $user->id)->paginate(10);
+        $data = AktifitasSiswa::where('id_siswa', $user->id);
+        $req = request()->all();
+        foreach($req as $key => $value)
+            $data = $data->where($key, $value);
+
+        $data = $data->paginate(10);
 
         return response()->json(['success' => true, 'data' => $data]);
     }

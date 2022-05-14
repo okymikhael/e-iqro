@@ -92,7 +92,6 @@ class FormSiswa extends Component
         if($this->password && $this->old_password != $this->password) 
             $this->password = Hash::make($this->password);
 
-
         $data = [
             'nama_lengkap'  => $this->nama_lengkap,
             'nama_panggilan'  => $this->nama_panggilan,
